@@ -4,9 +4,12 @@ import com.project.urlshortener.entity.UrlMapping;
 import com.project.urlshortener.exceptions.UrlNotFoundException;
 import com.project.urlshortener.repository.UrlMappingRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.io.FileNotFoundException;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,6 +28,11 @@ public class UrlMappingService {
     public UrlMapping shortenUrl(String originalUrl){
         String shortCode = generateShortCode();
         UrlMapping urlMapping = new UrlMapping();
+
+        urlMapping.setCreationDate(LocalDate.now());
+
+        LocalDate expireDate = LocalDate.now().plusDays(30);
+        urlMapping.setExpirationDate(expireDate);
 
         urlMapping.setOriginalUrl(originalUrl);
         urlMapping.setShortUrl(shortCode);

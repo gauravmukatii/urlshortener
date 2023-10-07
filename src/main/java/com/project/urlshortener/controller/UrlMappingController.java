@@ -22,11 +22,10 @@ public class UrlMappingController {
     }
 
     @GetMapping("/{shortCode}")
-    public ResponseEntity<Void> redirectToOriginalUrl(@PathVariable String shortCode){
+    public ResponseEntity<String> redirectToOriginalUrl(@PathVariable String shortCode){
         String originalUrl = urlMappingService.redirectToOriginalUrl(shortCode);
         return ResponseEntity.status(HttpStatus.FOUND)
-                .header("Location", originalUrl)
-                .build();
+                .body(originalUrl);
     }
 
     @GetMapping("/getall")
